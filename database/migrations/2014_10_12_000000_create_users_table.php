@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('last_name');
-            $table->string('company')
+            $table->string('company');
             $table->string('area');
             $table->string('department');
             $table->string('job_title');
-            $table->string('picture_url');
-            $table->string('status')->comment('active, inactive');
+            $table->string('picture_url')->nullable();
+            $table->string('status')->comment('active, inactive')->default('active');
             $table->timestamps();
         });
     }

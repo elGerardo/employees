@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -43,8 +46,17 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (Exception $e) {
+            Log::info($e->getMessage());
+            if ($e instanceof NotFoundHttpException and str_contains($e->getMessage(), 'The route')) {
+                return response()->json(["message" => "Route not found"], 404);
+            }
+
+            if ($e instanceof NotFoundHttpException and str_contains($e->getMessage(), 'No query')) {
+                return response()->json(["message" => "Row not found"], 404);
+            }
+
+            return response()->json(["message" => "Server Error"], 500);
         });
     }
 }

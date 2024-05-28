@@ -34,7 +34,7 @@ class UpdateUserRequest extends FormRequest
             'department' => 'string',
             'job_title' => 'string',
             'picture' => 'file|image:jpeg,png,jpg',
-            'status' => 'string|in:active,inactive',
+            'status' => 'string|in:Active,Inactive',
         ];
     }
 

@@ -18,6 +18,6 @@ Route::group(['prefix' => 'user'], function(){
     Route::get('', [UserController::class, 'index']);
     Route::post('', [UserController::class, 'store']);
     Route::get('/{user_id}', [UserController::class, 'show']);
-    Route::put('/{user_id}', [UserController::class, 'update']);
+    Route::post('/{user_id}', [UserController::class, 'update']);
     Route::delete('/{user_id}', [UserController::class, 'destroy']);
 });

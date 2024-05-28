@@ -47,7 +47,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (Exception $e) {
-            Log::info($e->getMessage());
             if ($e instanceof NotFoundHttpException and str_contains($e->getMessage(), 'The route')) {
                 return response()->json(["message" => "Route not found"], 404);
             }

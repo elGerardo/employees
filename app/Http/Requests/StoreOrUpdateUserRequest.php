@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use App\Exceptions\JsonValidationException;
 
-class StoreUserRequest extends FormRequest
+class StoreOrUpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,6 +34,7 @@ class StoreUserRequest extends FormRequest
             'department' => 'required|string',
             'job_title' => 'required|string',
             'picture' => 'file|image:jpeg,png,jpg',
+            'status' => 'string|in:Active,Inactive',
         ];
     }
 

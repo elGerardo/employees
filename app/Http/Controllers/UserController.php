@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\StoreOrUpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -18,7 +16,7 @@ class UserController extends Controller
         return UserResource::collection(User::select('*')->filter($request->query())->get());
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreOrUpdateUserRequest $request)
     {
         $validatedData = $request->validated();
         if ($request->hasFile('picture')) {
@@ -26,7 +24,6 @@ class UserController extends Controller
             $validatedData['picture_url'] = $path;
         }
 
-        $validatedData['status'] = 'Active';
         $user = new User($validatedData);
         $user->save();
 
@@ -55,7 +52,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(UpdateUserRequest $request, int $user_id)
+    public function update(StoreOrUpdateUserRequest $request, int $user_id)
     {
         $user = User::findOrFail($user_id);
         $validatedData = $request->validated();
